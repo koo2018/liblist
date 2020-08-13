@@ -91,7 +91,7 @@ for file in files:
             try:
                 parsed = parser.parse(parsed)
             except:
-                parsed = 'Unexisting date!'
+                parsed = 'Unexisting dateq!'
 
 
             cnt += 1
