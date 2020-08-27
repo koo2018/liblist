@@ -12,8 +12,6 @@ files = ['origins/mediacom_academ.txt','origins/mediacom_creative.txt','origins/
 Топ ссылок
 '''
 
-
-
 for file in files:
     url_top = {}
 
@@ -29,14 +27,16 @@ for file in files:
     print(file)
     url_top_sorted = sorted(url_top, key=url_top.get, reverse=True)
 
+    fout = open('urls/topsites_'+file.split('/')[1]+".csv", 'w')
+
     for url in url_top_sorted:
-        print(url+":", url_top[url])
+        fout.write(url+"; "+str(url_top[url])+'\n')
+
+    fout.close()
 
 '''
     топ youtube
 '''
-
-
 
 for file in files:
     yt_top = {}
@@ -52,13 +52,75 @@ for file in files:
                 else:
                     yt_top[url] += 1
 
-    print(file)
+
 
     yt_top_sorted = sorted(yt_top, key=yt_top.get, reverse=True)
 
-    for url in yt_top_sorted:
-        print(url+":", yt_top[url])
+    fout = open('urls/youtube_' + file.split('/')[1] + ".csv", 'w')
 
+    for url in yt_top_sorted:
+        fout.write(url+"; "+str(yt_top[url])+'\n')
+
+    fout.close()
+
+
+'''
+    топ telegram
+'''
+
+for file in files:
+    tlg_top = {}
+
+    for smf in data[file]:
+
+        url = data[file][smf]['3']
+        if url:
+
+            if '//t.me/' in url:
+                if url not in tlg_top:
+                    tlg_top[url] = 1
+                else:
+                    tlg_top[url] += 1
+
+
+
+    tlg_top_sorted = sorted(tlg_top, key=tlg_top.get, reverse=True)
+
+    fout = open('urls/tlg_' + file.split('/')[1] + ".csv", 'w')
+
+    for url in tlg_top_sorted:
+        fout.write(url+"; "+str(tlg_top[url])+'\n')
+
+    fout.close()
+
+'''
+    топ vk
+'''
+
+for file in files:
+    vk_top = {}
+
+    for smf in data[file]:
+
+        url = data[file][smf]['3']
+        if url:
+
+            if '//vk.com/' in url:
+                if url not in vk_top:
+                    vk_top[url] = 1
+                else:
+                    vk_top[url] += 1
+
+
+
+    vk_top_sorted = sorted(vk_top, key=vk_top.get, reverse=True)
+
+    fout = open('urls/vk_' + file.split('/')[1] + ".csv", 'w')
+
+    for url in vk_top_sorted:
+        fout.write(url+"; "+str(vk_top[url])+'\n')
+
+    fout.close()
 
 
 
@@ -85,10 +147,8 @@ for file_name in data:
 Ссылки    
 '''
 
-
+top_urls = {}
 for file_name in data:
-    file_name = 'origins/jour_academ.txt'
-
 
     for smf in upon_years[file_name]:
 
@@ -103,7 +163,17 @@ for file_name in data:
                 for url in urls:
                     if 'http' in url: a = url
 
-                #print(a)
 
+                if a in top_urls:
+                    top_urls[a] += 1
+                else:
+                    top_urls[a] = 1
 
-    break
+    top_urls_sorted = sorted(top_urls, key=top_urls.get, reverse=True)
+
+    fout = open('urls/topurls_' + file_name.split('/')[1] + ".csv", 'w',encoding='cp1251')
+
+    for url in top_urls_sorted:
+        fout.write(url+';'+str(top_urls[url])+'\n')
+
+    fout.close()
