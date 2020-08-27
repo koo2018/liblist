@@ -29,4 +29,5 @@ for file in data:
     langs_sorted = sorted(langs, key=langs.get, reverse=True)
 
     for out in langs_sorted:
+
         print(out.strip() + ';' + str(langs[out]) + "")
