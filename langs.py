@@ -10,7 +10,7 @@ with open('data.json', 'r') as f:
 langdetect.DetectorFactory.seed = 0
 langs = {}
 
-file = 'origins/jour_academ.txt'
+file = 'origins/jour_creative.txt'
 print(file)
 cnt = 1
 for rec in data[file]:
@@ -23,7 +23,7 @@ for rec in data[file]:
         else:
             langs[lng]=1
 
-        if "en:" in str(lang[0]) and re.match('[а-яА-я]',data[file][rec]['0'].strip()):
+        if "bg:" in str(lang[0]):
             print(cnt, data[file][rec]['0'].strip())
             cnt += 1
     except:
