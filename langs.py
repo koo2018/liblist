@@ -1,4 +1,4 @@
-import json
+import json,re
 import langdetect
 
 
@@ -10,24 +10,32 @@ with open('data.json', 'r') as f:
 langdetect.DetectorFactory.seed = 0
 langs = {}
 
-for file in data:
-    print(file)
-    for rec in data[file]:
+file = 'origins/jour_academ.txt'
+print(file)
+cnt = 1
+for rec in data[file]:
 
-        rec.replace('дата обращения','')
+    try:
+        lang = langdetect.detect_langs(data[file][rec]['0'])
+        lng = (lang[0].lang)
+        if lng in langs:
+            langs[lng] +=1
+        else:
+            langs[lng]=1
 
-        try:
-            lang = langdetect.detect_langs(data[file][rec]['1'])
-            lng = (lang[0].lang)
-            if lng in langs:
-                langs[lng] +=1
-            else:
-                langs[lng]=1
-        except:
-            lang = []
+        if "en:" in str(lang[0]) and re.match('[а-яА-я]',data[file][rec]['0'].strip()):
+            print(cnt, data[file][rec]['0'].strip())
+            cnt += 1
+    except:
+        lang = []
+
+'''
+
 
     langs_sorted = sorted(langs, key=langs.get, reverse=True)
 
     for out in langs_sorted:
 
         print(out.strip() + ';' + str(langs[out]) + "")
+
+'''
